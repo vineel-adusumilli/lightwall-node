@@ -1,0 +1,27 @@
+<html>
+  <head>
+    <title>LightWall</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      $(document).ready(function() {
+        var socket = io.connect('http://localhost');
+        socket.on('update rgb', function(data) {
+          $('#r').val(data.r);
+          $('#g').val(data.g);
+          $('#b').val(data.b);
+        });
+
+        $('#illuminate').click(function() {
+          socket.emit('illuminate', { r: $('#r').val(), g: $('#g').val(), b: $('#b').val() });
+        });
+      });
+    </script>
+  </head>
+  <body>
+    R: <input type="text" id="r" />
+    G: <input type="text" id="g" />
+    B: <input type="text" id="b" />
+    <input type="button" value="Illuminate!" id="illuminate"/>
+  </body>
+</html>

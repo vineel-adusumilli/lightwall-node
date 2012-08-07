@@ -1,56 +1,21 @@
-var net = require('net');
-var sys = require('sys');
+var net = require('net')
+  , sys = require('sys')
+  , app = require('http').createServer(handler)
+  , io = require('socket.io').listen(app)
+  , fs = require('fs');
 
-var stdin = process.openStdin();
+var ARDUINO_PORT = 5000;
+var WEB_PORT = 8080;
 
-var PORT = 8080;
 var rgb = [ 0, 0, 0 ];
 
 var socket = null;
 
 net.createServer(function(sock) {
-  console.log('Connected!');
+  console.log('Connected to Arduino!');
   socket = sock;
   sendColors();
-  
-  process.stdout.write('rgb(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ')>');
-  stdin.addListener('data', function(d) {
-    var raw = d.toString().trim().split(' ');
-    if (raw.length == 3) {
-      var valid = true;
-      for (var i = 0; i < raw.length; i++) {
-        raw[i] = parseInt(raw[i]);
-        if (!(0 <= raw[i] && raw[i] <= 255))
-          valid = false;
-        if (raw[i] == 1)
-          raw[i] = 2;
-      }
-      
-      if (valid) {
-        rgb = raw;
-        if (socket)
-          sendColors();
-      }
-    }
-    
-    process.stdout.write('rgb(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ')>');
-  });
-}).listen(PORT);
-
-
-
-function breathe(i) {
-  var value;
-  value = Math.round((-240 * Math.abs(Math.sin(i * 0.1))) + 255);
-  for (var j = 0; j < rgb.length; j++) {
-    rgb[j] = value;
-  }
-  console.log('rgb(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ')');
-  sendColors();
-  setTimeout(function() {
-    breathe(i + 1);
-  }, 10);
-}
+}).listen(ARDUINO_PORT);
 
 function sendColors() {
   if (socket) {
@@ -62,4 +27,30 @@ function sendColors() {
   }
 }
 
-console.log('Server listening on localhost:' + PORT);
+app.listen(WEB_PORT);
+
+function handler(req, res) {
+  fs.readFile(__dirname + '/index.html', function(err, data) {
+    if (err) {
+      res.writeHead(500);
+      return res.end('Error loading index.html');
+    }
+
+    res.writeHead(200);
+    res.end(data);
+  });
+}
+
+io.sockets.on('connection', function(socket) {
+  socket.emit('update rgb', { r: rgb[0], g: rgb[1], b: rgb[2] });
+  socket.on('illuminate', function (data) {
+    rgb[0] = data.r;
+    rgb[1] = data.g;
+    rgb[2] = data.b;
+
+    sendColors();
+  });
+});
+
+console.log('Arduino server listening on localhost:' + ARDUINO_PORT);
+console.log('Web server listening on localhost:' + WEB_PORT);
