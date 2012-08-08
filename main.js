@@ -41,16 +41,31 @@ function handler(req, res) {
   });
 }
 
-io.sockets.on('connection', function(socket) {
-  socket.emit('update rgb', { r: rgb[0], g: rgb[1], b: rgb[2] });
-  socket.on('illuminate', function (data) {
-    rgb[0] = data.r;
-    rgb[1] = data.g;
-    rgb[2] = data.b;
+io.sockets.on('connection', function(sock) {
+  update_rgb();
+  sock.on('illuminate', function (data) {
+    var raw = [ data.r, data.g, data.b ];
+    var valid = true;
+    for (var i = 0; i < raw.length; i++) {
+      raw[i] = parseInt(raw[i]);
+      if (!(0 <= raw[i] && raw[i] <= 255)) {
+        valid = false;
+        break;
+      }
+    }
 
-    sendColors();
+    if (valid) {
+      rgb = raw;
+      sendColors();
+    }
+
+    update_rgb();
   });
 });
+
+function update_rgb() {
+  io.sockets.emit('update rgb', { r: rgb[0], g: rgb[1], b: rgb[2] });
+}
 
 console.log('Arduino server listening on localhost:' + ARDUINO_PORT);
 console.log('Web server listening on localhost:' + WEB_PORT);

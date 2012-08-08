@@ -1,27 +1,39 @@
 <html>
   <head>
     <title>LightWall</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-    <script src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script type="text/javascript" src="http://www.dematte.at/colorPicker/colorPicker/colorPicker.js" charset="UTF-8"></script>
+    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
     <script>
       $(document).ready(function() {
+        colorPicker.allowResize = false;
+        colorPicker.allowClose = false;
+        colorPicker.allowDrag = false;
+        
         var socket = io.connect('http://localhost');
+        var initialized = false;
+        var wait = false;
+        
         socket.on('update rgb', function(data) {
-          $('#r').val(data.r);
-          $('#g').val(data.g);
-          $('#b').val(data.b);
+          if (!initialized) {
+            $('#color').trigger('click');
+            initialized = true;
+          }
+          colorPicker.importColor([data.r, data.g, data.b]);
+          wait = true;
         });
-
-        $('#illuminate').click(function() {
-          socket.emit('illuminate', { r: $('#r').val(), g: $('#g').val(), b: $('#b').val() });
-        });
+        
+        colorPicker.exportColor = function() {
+          if (!wait) {
+            var rgb = colorPicker.CP.rgb;
+            socket.emit('illuminate', { r: rgb[0], g: rgb[1], b: rgb[2] });
+          }
+          wait = false;
+        };
       });
     </script>
   </head>
   <body>
-    R: <input type="text" id="r" />
-    G: <input type="text" id="g" />
-    B: <input type="text" id="b" />
-    <input type="button" value="Illuminate!" id="illuminate"/>
+    <div id="color" style="display:none;" onclick="colorPicker(event);" />
   </body>
 </html>
