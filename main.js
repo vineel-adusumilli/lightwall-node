@@ -11,6 +11,18 @@ var rgb = [ 0, 0, 0 ];
 
 var socket = null;
 
+io.enable('browser client minification');
+io.enable('browser client etag');
+io.enable('browser client gzip');
+io.set('log level', 1);
+io.set('transports', [
+    'websocket'
+  , 'flashsocket'
+  , 'htmlfile'
+  , 'xhr-polling'
+  , 'jsonp-polling'
+]);
+
 net.createServer(function(sock) {
   console.log('Connected to Arduino!');
   socket = sock;
