@@ -2,10 +2,16 @@ var net = require('net')
   , sys = require('sys')
   , app = require('http').createServer(handler)
   , io = require('socket.io').listen(app)
-  , fs = require('fs');
+  , fs = require('fs')
+  , static = require('node-static');
 
 var ARDUINO_PORT = 5000;
 var WEB_PORT = 8080;
+var WEB_ROOT = './public';
+var file = new(static.Server)(WEB_ROOT, {
+  cache: 0,
+  headers: { 'X-Powered-By': 'node-static' }
+});
 
 var rgb = [ 0, 0, 0 ];
 
@@ -42,14 +48,14 @@ function sendColors() {
 app.listen(WEB_PORT);
 
 function handler(req, res) {
-  fs.readFile(__dirname + '/index.html', function(err, data) {
+  file.serve(req, res, function(err, result) {
     if (err) {
-      res.writeHead(500);
-      return res.end('Error loading index.html');
+      console.error('Error serving %s - %s', req.url, err.message);
+      res.writeHead(err.status, err.headers);
+      res.end(err.status + ' ' + err.message);
+    } else {
+      console.log('%s - %s', req.url, res.message);
     }
-
-    res.writeHead(200);
-    res.end(data);
   });
 }
 
