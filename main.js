@@ -57,7 +57,7 @@ function updateRGB() {
 }
 
 function fire() {
-	setColor([255, random(0, 150), 0]);
+	setColor([255, random(0, 75), 0]);
 	timer = setTimeout(fire, random(200, 400));
 }
 
