@@ -88,12 +88,8 @@ function blueGlow(curColor) {
 function flash(t) {
   t = pick(t, 0);
 
-  if (0 <= t && t < 10) {
-    setColor([0, 0, 0]);
-  } else {
-    var value = Math.round(255 * Math.exp(-1 / 20.0 * (t - 10)));
-    setColor([value, value, value]);
-  }
+  var value = Math.round(255 * Math.exp(-1 / 20.0 * t));
+  setColor([value, value, value]);
 
   timer = setTimeout(function() {
     flash((t + 1) % 80);
