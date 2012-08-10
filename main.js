@@ -31,7 +31,7 @@ function setColor(raw) {
 	var valid = true;
 	for (var i = 0; i < raw.length; i++) {
 		raw[i] = parseInt(raw[i]);
-		if (raw[i] == 1) raw[i] == 2;
+		if (raw[i] == 1) raw[i] = 2;
 		if (!(0 <= raw[i] && raw[i] <= 255)) {
 			valid = false;
 			break;
