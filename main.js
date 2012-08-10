@@ -85,6 +85,21 @@ function blueGlow(curColor) {
 	}, 30);
 }
 
+function flash(t) {
+  t = pick(t, 0);
+
+  if (0 <= t && t < 10) {
+    setColor([0, 0, 0]);
+  } else {
+    var value = Math.round(255 * Math.exp(-1 / 200.0 * (t - 10)));
+    setColor([value, value, value]);
+  }
+
+  timer = setTimeout(function() {
+    flash((t + 1) % 400);
+  }, 10);
+}
+
 io.enable('browser client minification');
 io.enable('browser client etag');
 io.enable('browser client gzip');
@@ -125,14 +140,19 @@ io.sockets.on('connection', function(sock) {
     setColor([data.r, data.g, data.b]);
   });
   
-  sock.on('fire', function(data) {
+  sock.on('fire', function() {
   	clearTimeout(timer);
   	fire();
   });
   
-  sock.on('blue glow', function(data) {
+  sock.on('blue glow', function() {
   	clearTimeout(timer);
   	blueGlow();
+  });
+
+  sock.on('flash', function() {
+    clearTimeout(timer);
+    flash();
   });
 });
 

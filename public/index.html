@@ -9,12 +9,17 @@
       * {
         margin: 0px;
         padding: 0px;
+
+        border-radius: 5px;
       }
 
       #main {
         width: 256px;
         margin-left: auto;
         margin-right: auto;
+        padding: 5px;
+
+        border-width: 1px;
       }
 
       #canvas {
@@ -22,13 +27,18 @@
         height: 256px;
       }
 
-      #color, #fire, #blueglow {
+      #color, button {
         display: block;
         width: 256px;
       }
 
       #color {
         height: 50px;
+      }
+
+      button {
+        height: 25px;
+        margin-top: 3px;
       }
     </style>
 
@@ -108,6 +118,10 @@
           socket.emit('blue glow');
         });
 
+        $('#flash').click(function() {
+          socket.emit('flash');
+        });
+
         function getColor(x, y) {
           var pos = getPos(canvas, x, y);
           if (pos !== null &&
@@ -132,8 +146,9 @@
     <div id="main">
       <canvas id="canvas" width="256" height="256"></canvas>
       <div id="color"></div>
-      <input type="button" id="fire" value="Fire" />
-      <input type="button" id="blueglow" value="Blue Glow" />
+      <button id="fire">Fire</button>
+      <button id="blueglow">Blue Glow</button>
+      <button id="flash">Flash</button>
     </div>
   </body>
 </html>
