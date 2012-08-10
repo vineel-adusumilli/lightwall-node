@@ -6,10 +6,20 @@
     <title>LightWall</title>
 
     <style type="text/css">
+      * {
+        margin: 0px;
+        padding: 0px;
+      }
+
       #main {
         width: 256px;
         margin-left: auto;
         margin-right: auto;
+      }
+
+      #canvas {
+        width: 256px;
+        height: 256px;
       }
 
       #color, #fire, #blueglow {
@@ -121,9 +131,9 @@
   <body>
     <div id="main">
       <canvas id="canvas" width="256" height="256"></canvas>
+      <div id="color"></div>
       <input type="button" id="fire" value="Fire" />
       <input type="button" id="blueglow" value="Blue Glow" />
-      <div id="color"></div>
     </div>
   </body>
 </html>
