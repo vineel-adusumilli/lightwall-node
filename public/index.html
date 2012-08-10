@@ -1,28 +1,24 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
     <title>LightWall</title>
 
     <style type="text/css">
-      #canvas {
+      #main {
+        width: 256px;
+        margin-left: auto;
+        margin-right: auto;
       }
 
       #color, #fire, #blueglow {
         display: block;
         width: 256px;
-        margin-left: 10px;
-        margin-right: 10px;
       }
 
       #color {
         height: 50px;
-      }
-
-      #fire {
-      }
-
-      #blueglow {
       }
     </style>
 
@@ -48,10 +44,6 @@
       $(document).ready(function() {
         var aWantsUntrusted = false;
 
-        $(document).bind('touchmove', function(evt) {
-          evt.preventDefault();
-        }, aWantsUntrusted);
-
         var socket = io.connect('http://' + window.location.hostname);
         socket.on('update rgb', function(data) {
           $('#color').css('background-color', 'rgb(' + data.r + ',' + data.g + ',' + data.b + ')');
@@ -59,7 +51,7 @@
 
         var canvas = $('#canvas')[0];
         var ctx = canvas.getContext('2d');
-        var padding = 10;
+        var padding = 0;
         var image = new Image();
         image.onload = function() {
           ctx.drawImage(image, padding, padding);
@@ -77,6 +69,10 @@
           mouseDown = false;
         }, aWantsUntrusted);
 
+        $('#canvas').bind('mouseout', function() {
+          mouseDown = false;
+        }, aWantsUntrusted);
+
         $('#canvas').bind('mousemove', function(evt) {
           if (mouseDown)
             getColor(evt.clientX, evt.clientY);
@@ -86,6 +82,8 @@
         $('#canvas').bind('touchmove', updateTouch, aWantsUntrusted);
 
         function updateTouch(evt) {
+          evt.preventDefault();
+          evt.stopPropagation();
           if (evt.targetTouches.length == 1) {
             var touch = event.targetTouches[0];
             getColor(touch.pageX, touch.pageY);
@@ -122,7 +120,7 @@
   </head>
   <body>
     <div id="main">
-      <canvas id="canvas" width="276" height="276"></canvas>
+      <canvas id="canvas" width="256" height="256"></canvas>
       <input type="button" id="fire" value="Fire" />
       <input type="button" id="blueglow" value="Blue Glow" />
       <div id="color"></div>
