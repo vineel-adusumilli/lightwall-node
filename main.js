@@ -91,7 +91,7 @@ function flash(t) {
   if (0 <= t && t < 10) {
     setColor([0, 0, 0]);
   } else {
-    var value = Math.round(255 * Math.exp(-1 / 40.0 * (t - 10)));
+    var value = Math.round(255 * Math.exp(-1 / 20.0 * (t - 10)));
     setColor([value, value, value]);
   }
 
