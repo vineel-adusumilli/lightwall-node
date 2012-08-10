@@ -57,7 +57,7 @@ function updateRGB() {
 }
 
 function fire() {
-	setColor([255, random(0, 75), 0]);
+	setColor([255, random(0, 50), 0]);
 	timer = setTimeout(fire, random(200, 400));
 }
 
@@ -70,7 +70,7 @@ function blueGlow(curColor) {
 		];
 	var i;
 	for (i = 1; i < 3; i++) {
-		var change = random(-2, 2);
+		var change = random(-4, 4);
 		curColor[i] = curColor[i] + change;
 		if (curColor[i] < minMax[i][0]) {
 			curColor[i] = minMax[i][0];
