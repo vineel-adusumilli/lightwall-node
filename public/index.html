@@ -45,6 +45,8 @@
     <script type="text/javascript" src="http://zeptojs.com/zepto.min.js"></script>
     <script type="text/javascript" src="/socket.io/socket.io.js"></script>
     <script>
+      var socket;
+      
       function getPos(canvas, x, y) {
         var obj = canvas;
         var top = 0;
@@ -64,7 +66,7 @@
       $(document).ready(function() {
         var aWantsUntrusted = false;
 
-        var socket = io.connect('http://' + window.location.hostname);
+        socket = io.connect('http://' + window.location.hostname);
         socket.on('update rgb', function(data) {
           $('#color').css('background-color', 'rgb(' + data.r + ',' + data.g + ',' + data.b + ')');
         });
