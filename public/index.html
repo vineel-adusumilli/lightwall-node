@@ -8,10 +8,21 @@
       #canvas {
       }
 
-      #color {
+      #color, #fire, #blueglow {
+        display: block;
         width: 256px;
+        margin-left: 10px;
+        margin-right: 10px;
+      }
+
+      #color {
         height: 50px;
-        margin: 0px 10px;
+      }
+
+      #fire {
+      }
+
+      #blueglow {
       }
     </style>
 
@@ -81,6 +92,14 @@
           }
         }
 
+        $('#fire').click(function() {
+          socket.emit('fire');
+        });
+
+        $('#blueglow').click(function() {
+          socket.emit('blue glow');
+        });
+
         function getColor(x, y) {
           var pos = getPos(canvas, x, y);
           if (pos !== null &&
@@ -95,8 +114,7 @@
             var red = data[((image.width * relY) + relX) * 4];
             var green = data[((image.width * relY) + relX) * 4 + 1];
             var blue = data[((image.width * relY) + relX) * 4 + 2];
-            //$('#color').css('background-color', 'rgb(' + red + ',' + green + ',' + blue + ')');
-            socket.emit('illuminate', { r: red, g: green, b: blue });
+            socket.emit('rgb', { r: red, g: green, b: blue });
           }
         }
       });
@@ -105,6 +123,8 @@
   <body>
     <div id="main">
       <canvas id="canvas" width="276" height="276"></canvas>
+      <input type="button" id="fire" value="Fire" />
+      <input type="button" id="blueglow" value="Blue Glow" />
       <div id="color"></div>
     </div>
   </body>
