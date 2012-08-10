@@ -17,6 +17,10 @@ var rgb = [ 0, 0, 0 ];
 
 var socket = null;
 
+var record;
+var recording = false;
+var last;
+
 var timer;
 
 function random(low, high) {
@@ -38,10 +42,21 @@ function setColor(raw) {
 		}
 	}
 
+  updateRecord();
+
 	if (valid)
 		rgb = raw;
 	
 	updateRGB();
+}
+
+function updateRecord() {
+  if (recording) {
+    var now = Date.now();
+    var delta = now - last;
+    last = now;
+    record.push([rgb, delta]);
+  }
 }
 
 function updateRGB() {
@@ -85,15 +100,13 @@ function blueGlow(curColor) {
 	}, 30);
 }
 
-function flash(t) {
-  t = pick(t, 0);
-
-  var value = Math.round(255 * Math.exp(-1 / 20.0 * t));
-  setColor([value, value, value]);
+function play(i) {
+  i = pick(i, 0);
+  setColor(record[i][0]);
 
   timer = setTimeout(function() {
-    flash((t + 1) % 80);
-  }, 50);
+    play((i + 1) % record.length);
+  }, record[i][1]);
 }
 
 io.enable('browser client minification');
@@ -146,9 +159,22 @@ io.sockets.on('connection', function(sock) {
   	blueGlow();
   });
 
-  sock.on('flash', function() {
-    clearTimeout(timer);
-    flash();
+  sock.on('record', function() {
+    record = [];
+    recording = true;
+    last = Date.now();
+  });
+
+  sock.on('stop', function() {
+    updateRecord();
+    recording = false;
+  });
+
+  sock.on('play', function() {
+    if (typeof record !== 'undefined' && !recording) {
+      clearTimeout(timer);
+      play();
+    }
   });
 });
 

@@ -120,8 +120,18 @@
           socket.emit('blue glow');
         });
 
-        $('#flash').click(function() {
-          socket.emit('flash');
+        $('#record').click(function() {
+          if ($(this).text() == 'Record') {
+            $(this).text('Stop');
+            socket.emit('record');
+          } else {
+            $(this).text('Record');
+            socket.emit('stop');
+          }
+        });
+
+        $('#play').click(function() {
+          socket.emit('play');
         });
 
         function getColor(x, y) {
@@ -150,7 +160,8 @@
       <div id="color"></div>
       <button id="fire">Fire</button>
       <button id="blueglow">Blue Glow</button>
-      <button id="flash">Flash</button>
+      <button id="record">Record</button>
+      <button id="play">Play</button>
     </div>
   </body>
 </html>
