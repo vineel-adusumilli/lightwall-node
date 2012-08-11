@@ -24,30 +24,30 @@ var last;
 var timer;
 
 function random(low, high) {
-	return Math.floor(Math.random() * (high - low + 1)) + low;
+  return Math.floor(Math.random() * (high - low + 1)) + low;
 }
 
 function pick(x, val) {
-	return typeof x == 'undefined' ? val : x;
+  return typeof x == 'undefined' ? val : x;
 }
 
 function setColor(raw) {
-	var valid = true;
-	for (var i = 0; i < raw.length; i++) {
-		raw[i] = parseInt(raw[i]);
-		if (raw[i] == 1) raw[i] = 2;
-		if (!(0 <= raw[i] && raw[i] <= 255)) {
-			valid = false;
-			break;
-		}
-	}
+  var valid = true;
+  for (var i = 0; i < raw.length; i++) {
+    raw[i] = parseInt(raw[i]);
+    if (raw[i] == 1) raw[i] = 2;
+    if (!(0 <= raw[i] && raw[i] <= 255)) {
+      valid = false;
+      break;
+    }
+  }
 
   updateRecord();
 
-	if (valid)
-		rgb = raw;
-	
-	updateRGB();
+  if (valid)
+    rgb = raw;
+  
+  updateRGB();
 }
 
 function updateRecord() {
@@ -72,32 +72,32 @@ function updateRGB() {
 }
 
 function fire() {
-	setColor([255, random(0, 50), 0]);
-	timer = setTimeout(fire, random(200, 400));
+  setColor([255, random(0, 50), 0]);
+  timer = setTimeout(fire, random(200, 400));
 }
 
 function blueGlow(curColor) {
-	curColor = pick(curColor, [0, 40, 200]);
-	var minMax = [
-		[0, 0],
-		[100, 255],
-		[100, 255]
-		];
-	var i;
-	for (i = 1; i < 3; i++) {
-		var change = random(-4, 4);
-		curColor[i] = curColor[i] + change;
-		if (curColor[i] < minMax[i][0]) {
-			curColor[i] = minMax[i][0];
-		} else if (curColor[i] > minMax[i][1]) {
-			curColor[i] = minMax[i][1];
-		}
-	}
+  curColor = pick(curColor, [0, 40, 200]);
+  var minMax = [
+    [0, 0],
+    [100, 255],
+    [100, 255]
+    ];
+  var i;
+  for (i = 1; i < 3; i++) {
+    var change = random(-4, 4);
+    curColor[i] = curColor[i] + change;
+    if (curColor[i] < minMax[i][0]) {
+      curColor[i] = minMax[i][0];
+    } else if (curColor[i] > minMax[i][1]) {
+      curColor[i] = minMax[i][1];
+    }
+  }
 
-	setColor(curColor);
-	timer = setTimeout(function() {
-		blueGlow(curColor);
-	}, 30);
+  setColor(curColor);
+  timer = setTimeout(function() {
+    blueGlow(curColor);
+  }, 30);
 }
 
 function play(i) {
@@ -145,27 +145,29 @@ io.sockets.on('connection', function(sock) {
   updateRGB();
   
   sock.on('rgb', function (data) {
-  	clearTimeout(timer);
+    clearTimeout(timer);
     setColor([data.r, data.g, data.b]);
   });
   
   sock.on('fire', function() {
-  	clearTimeout(timer);
-  	fire();
+    clearTimeout(timer);
+    fire();
   });
   
   sock.on('blue glow', function() {
-  	clearTimeout(timer);
-  	blueGlow();
+    clearTimeout(timer);
+    blueGlow();
   });
 
   sock.on('record', function() {
+    io.sockets.emit('recording', true);
     record = [];
     recording = true;
     last = Date.now();
   });
 
   sock.on('stop', function() {
+    io.sockets.emit('recording', false);
     updateRecord();
     recording = false;
   });
