@@ -15,5 +15,5 @@ $ npm install
 $ node main.js
 ```
 
-There is also a --no-static option that only enables the Arduino TCP and socket.io servers.
+There is also a `--no-static` option that only enables the Arduino TCP and socket.io servers.
 
