@@ -1,17 +1,41 @@
 var net = require('net')
   , sys = require('sys')
-  , app = require('http').createServer(handler)
-  , io = require('socket.io').listen(app)
-  , fs = require('fs')
-  , static = require('node-static');
+  , fs = require('fs');
+
+var WEB_PORT = 8080;
+
+// static server enabled
+var isStatic = process.argv[2] !== '--no-static';
+
+var io;
+if (isStatic) {
+  var app = require('http').createServer(handler);
+  io = require('socket.io').listen(app)
+  var static = require('node-static');
+  var WEB_ROOT = './public';
+  app.listen(WEB_PORT);
+  var file = new(static.Server)(WEB_ROOT, {
+    cache: 0,
+    headers: { 'X-Powered-By': 'node-static' }
+  });
+  function handler(req, res) {
+    file.serve(req, res, function(err, result) {
+      if (err) {
+        console.error('Error serving %s - %s', req.url, err.message);
+        res.writeHead(err.status, err.headers);
+        res.end(err.status + ' ' + err.message);
+      } else {
+        console.log('%s - %s', req.url, res.message);
+      }
+    });
+  }
+  console.log('Web and socket server listening on localhost:' + WEB_PORT);
+} else {
+  io = require('socket.io').listen(WEB_PORT);
+  console.log('Socket server listening on localhost:' + WEB_PORT);
+}
 
 var ARDUINO_PORT = 5000;
-var WEB_PORT = 8080;
-var WEB_ROOT = './public';
-var file = new(static.Server)(WEB_ROOT, {
-  cache: 0,
-  headers: { 'X-Powered-By': 'node-static' }
-});
 
 var rgb = [ 0, 0, 0 ];
 
@@ -127,20 +151,6 @@ net.createServer(function(sock) {
   updateRGB();
 }).listen(ARDUINO_PORT);
 
-app.listen(WEB_PORT);
-
-function handler(req, res) {
-  file.serve(req, res, function(err, result) {
-    if (err) {
-      console.error('Error serving %s - %s', req.url, err.message);
-      res.writeHead(err.status, err.headers);
-      res.end(err.status + ' ' + err.message);
-    } else {
-      console.log('%s - %s', req.url, res.message);
-    }
-  });
-}
-
 io.sockets.on('connection', function(sock) {
   updateRGB();
   
@@ -181,4 +191,3 @@ io.sockets.on('connection', function(sock) {
 });
 
 console.log('Arduino server listening on localhost:' + ARDUINO_PORT);
-console.log('Web server listening on localhost:' + WEB_PORT);
