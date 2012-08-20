@@ -78,8 +78,8 @@ $(document).ready(function() {
     socket.emit('fire');
   });
 
-  $('#blueglow').click(function() {
-    socket.emit('blue glow');
+  $('#ice').click(function() {
+    socket.emit('ice');
   });
 
   $('#record').click(function() {

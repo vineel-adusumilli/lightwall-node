@@ -100,7 +100,7 @@ function fire() {
   timer = setTimeout(fire, random(200, 400));
 }
 
-function blueGlow(curColor) {
+function ice(curColor) {
   curColor = pick(curColor, [0, 40, 200]);
   var minMax = [
     [0, 0],
@@ -120,7 +120,7 @@ function blueGlow(curColor) {
 
   setColor(curColor);
   timer = setTimeout(function() {
-    blueGlow(curColor);
+    ice(curColor);
   }, 30);
 }
 
@@ -164,9 +164,9 @@ io.sockets.on('connection', function(sock) {
     fire();
   });
   
-  sock.on('blue glow', function() {
+  sock.on('ice', function() {
     clearTimeout(timer);
-    blueGlow();
+    ice();
   });
 
   sock.on('record', function() {
