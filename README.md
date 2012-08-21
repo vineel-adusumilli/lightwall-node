@@ -1,7 +1,7 @@
 lightwall
 =========
 
-lightwall is live [here](http://wall.tinyfactory.co/).
+Live [here](http://wall.tinyfactory.co/).
 
 lightwall is a web app that, along with [LightDuino](https://github.com/vineel-adusumilli/LightDuino), makes it easy to color the illuminated wall at [TinyFactory](http://tinyfactory.co/).
 
