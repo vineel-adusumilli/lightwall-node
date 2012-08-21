@@ -19,7 +19,7 @@ function getPos(canvas, x, y) {
 $(document).ready(function() {
   var aWantsUntrusted = false;
 
-  socket = io.connect('http://' + window.location.hostname + ':8080');
+  socket = io.connect('http://' + window.location.hostname);
 
   socket.on('update rgb', function(data) {
     $('#color').css('background-color', 'rgb(' + data.r + ',' + data.g + ',' + data.b + ')');
