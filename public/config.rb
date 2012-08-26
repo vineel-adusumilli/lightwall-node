@@ -1,5 +1,3 @@
-require "compass-growl"
-
 http_path = "/"
 css_dir = "css"
 sass_dir = "sass"
@@ -13,3 +11,4 @@ relative_assets = true
 line_comments = false
 
 preferred_syntax = :sass
+

@@ -1,24 +1,56 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <title>LightWall</title>
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>LightWall</title>
+  <link rel="stylesheet" href="css/screen.css">
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+  <script type="text/javascript" src="script.js"></script>
+</head>
+<body>
 
-    <link rel="stylesheet" type="text/css" href="/style.css" />
+  <header>
+    <img src="images/logo.png" alt="">
+  </header>
 
-    <script type="text/javascript" src="/zepto.min.js"></script>
-    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
-    <script type="text/javascript" src="/script.js"></script>
-  </head>
-  <body>
-    <div id="main">
-      <canvas id="canvas" width="256" height="256"></canvas>
-      <div id="color"></div>
-      <button id="fire">Fire</button>
-      <button id="ice">Ice</button>
-      <button id="record">Record</button>
-      <button id="play">Play</button>
+  <div class="default">
+    <nav class="main">
+      <a class="fire"href="#">
+        1
+        <div>Fire</div>
+      </a>
+      <a class="ice"href="#">
+        2
+        <div>Ice</div>
+      </a>
+      <a class="record"href="#">
+        3
+        <div>Record</div>
+      </a>
+      <a class="play"href="#">
+        4
+        <div>Play</div>
+      </a>
+      <div class="clear"></div>
+    </nav>
+
+    <div class="colors">
+      <img src="images/swatch.jpg" alt="">
     </div>
-  </body>
+  </div>
+
+  <div class="gocrazy">
+    <nav>
+      <a href="#" class="stop">
+        5
+      </a>
+    </nav>
+
+  <div class="small-swatch">
+    <img src="images/smallswatch.jpg" alt="">
+  </div>
+
+  </div>
+</body>
 </html>

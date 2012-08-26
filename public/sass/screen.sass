@@ -1,0 +1,129 @@
+@import compass/reset
+@import compass/utilities
+@import compass/css3
+@import compass/typography
+@import queries
+
+$bg: #313334
+$text: #c1c6c7
+$icon: #313334
+$top: #747c7e
+$bottom: #3c3f40
+
++font-face("Symbols", font-files("Icons.woff", "Icons.svg", "Icons.eot"))
+
+@mixin symbols
+  font-family: "Symbols"
+  font-weight: normal
+
+body
+  background: $bg
+  color: $text
+  font-family: "Helvetica Neue", sans-serif
+  font-weight: normal
+  line-height: 1.6em
+
+header
+  text-align: center
+  padding: 25px 0
+  +background(url(../images/header.png), radial-gradient(adjust-saturation(#2dc8e4, 10%) 80px, #2dc8e4 140px, #63e0f6 200px))
+  background-size: 150%, 100%
+
+  img
+    max-width: 20%
+
+.colors, .small-swatch
+  margin-top: 30px
+  
+  img
+    max-width: 100%
+
+nav
+  background: darken($bottom, 30%)
+  padding: 3px
+
+  a
+    float: left
+    display: inline
+    width: 24%
+    margin-right: 0.5%
+    margin-left: 0.5%
+    +symbols
+    font-size: 40px
+    text-align: center
+    color: $icon
+    padding: 15px 0
+    text-decoration: none
+    +background(linear-gradient($top 0%, $bottom 90%))
+    +border-radius(3px)
+    text-shadow: 0 1px lighten($top, 3%)
+    +box-shadow(0px 5px 10px #000)
+    
+    div
+      font-family: "Helvetica Neue", sans-serif
+      font-size: 10px
+      text-transform: uppercase
+      position: relative
+      margin-top: 20px
+      color: $text
+      position: absolute
+      text-align: center
+      width: 24%
+
+    &:nth-child(4n+4)
+      margin-right: 0 !important
+
+    &:hover
+      +background(linear-gradient(#404445 0%, #3c3f40 90%))
+      +box-shadow(none)
+
+    &.fire:hover
+      color: #fcc1b4
+      text-shadow: 0 0 5px #fcc1b4, 0px 1px #ed8e6e
+
+      div
+        color: #ed8e6e
+        text-shadow: 0 0 5px #fcc1b4
+
+    &.ice:hover
+      color: #82dcf0
+      text-shadow: 0 0 5px #82dcf0, 0px 1px #4c98d4
+
+      div
+        color: #4c98d4
+        text-shadow: 0 0 5px #82dcf0
+
+    &.record:hover
+      color: #fc3c23
+      text-shadow: 0 0 5px #fc3c23, 0px 1px #ce2616
+
+      div
+        color: #f44f52
+        text-shadow: 0 0 5px #fd5f44
+
+    &.play:hover
+      color: #56fc3a
+      text-shadow: 0 0 5px #35d628
+
+      div
+        color: #a9f45a
+        text-shadow: 0 0 5px #55f939
+
+    &.stop
+      width: 100%
+      position: relative
+      z-index: 12
+      margin-left: 0
+      margin-right: 0
+      margin-bottom: 3px
+      +box-shadow(0)
+
+.gocrazy
+  display: none
+
+.clear
+  display: block
+  visibility: hidden
+  clear: both
+  height: 0
+  content:  "."

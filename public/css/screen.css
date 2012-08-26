@@ -74,7 +74,6 @@ header {
   background: url(../images/header.png), -webkit-radial-gradient(#21d0f0 80px, #2dc8e4 140px, #63e0f6 200px);
   background: url(../images/header.png), -moz-radial-gradient(#21d0f0 80px, #2dc8e4 140px, #63e0f6 200px);
   background: url(../images/header.png), -o-radial-gradient(#21d0f0 80px, #2dc8e4 140px, #63e0f6 200px);
-  background: url(../images/header.png), -ms-radial-gradient(#21d0f0 80px, #2dc8e4 140px, #63e0f6 200px);
   background: url(../images/header.png), radial-gradient(#21d0f0 80px, #2dc8e4 140px, #63e0f6 200px);
   background-size: 150%, 100%;
 }
@@ -96,8 +95,9 @@ nav {
 nav a {
   float: left;
   display: inline;
-  width: 24.5%;
-  margin-right: 1.273%;
+  width: 24%;
+  margin-right: 0.5%;
+  margin-left: 0.5%;
   font-family: "Symbols";
   font-weight: normal;
   font-size: 40px;
@@ -109,7 +109,6 @@ nav a {
   background: -webkit-linear-gradient(#747c7e 0%, #3c3f40 90%);
   background: -moz-linear-gradient(#747c7e 0%, #3c3f40 90%);
   background: -o-linear-gradient(#747c7e 0%, #3c3f40 90%);
-  background: -ms-linear-gradient(#747c7e 0%, #3c3f40 90%);
   background: linear-gradient(#747c7e 0%, #3c3f40 90%);
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
@@ -140,7 +139,6 @@ nav a:hover {
   background: -webkit-linear-gradient(#404445 0%, #3c3f40 90%);
   background: -moz-linear-gradient(#404445 0%, #3c3f40 90%);
   background: -o-linear-gradient(#404445 0%, #3c3f40 90%);
-  background: -ms-linear-gradient(#404445 0%, #3c3f40 90%);
   background: linear-gradient(#404445 0%, #3c3f40 90%);
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
@@ -182,6 +180,8 @@ nav a.stop {
   width: 100%;
   position: relative;
   z-index: 12;
+  margin-left: 0;
+  margin-right: 0;
   margin-bottom: 3px;
   -webkit-box-shadow: 0;
   -moz-box-shadow: 0;
