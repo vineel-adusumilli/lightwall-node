@@ -16,6 +16,10 @@ $bottom: #3c3f40
   font-family: "Symbols"
   font-weight: normal
 
+*
+  margin: 0
+  padding: 0
+
 body
   background: $bg
   color: $text
@@ -26,8 +30,9 @@ body
 header
   text-align: center
   padding: 25px 0
-  +background(url(../images/header.png), radial-gradient(adjust-saturation(#2dc8e4, 10%) 80px, #2dc8e4 140px, #63e0f6 200px))
   background-size: 150%, 100%
+  background-position: center
+  background-image: url(../images/header.png)
 
   img
     max-width: 20%
@@ -36,7 +41,7 @@ header
   margin-top: 30px
   
   img
-    max-width: 100%
+    width: 100%
 
 nav
   background: darken($bottom, 30%)
@@ -73,7 +78,7 @@ nav
     &:nth-child(4n+4)
       margin-right: 0 !important
 
-    &:hover
+    &:active
       +background(linear-gradient(#404445 0%, #3c3f40 90%))
       +box-shadow(none)
 
@@ -120,6 +125,12 @@ nav
 
 .gocrazy
   display: none
+
+#swatch
+  width: 100%
+
+#smallswatch
+  width: 100%
 
 .clear
   display: block

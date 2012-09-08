@@ -59,6 +59,11 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   src: url('../fonts/Icons.woff') format('woff'), url('../fonts/Icons.svg') format('svg'), url('../fonts/Icons.eot') format('embedded-opentype');
 }
 
+* {
+  margin: 0;
+  padding: 0;
+}
+
 body {
   background: #313334;
   color: #c1c6c7;
@@ -70,12 +75,9 @@ body {
 header {
   text-align: center;
   padding: 25px 0;
-  background: url(../images/header.png), -webkit-gradient(radial, 50% 50%, 0, 50% 50%, 200, color-stop(40%, #21d0f0), color-stop(70%, #2dc8e4), color-stop(100%, #63e0f6));
-  background: url(../images/header.png), -webkit-radial-gradient(#21d0f0 80px, #2dc8e4 140px, #63e0f6 200px);
-  background: url(../images/header.png), -moz-radial-gradient(#21d0f0 80px, #2dc8e4 140px, #63e0f6 200px);
-  background: url(../images/header.png), -o-radial-gradient(#21d0f0 80px, #2dc8e4 140px, #63e0f6 200px);
-  background: url(../images/header.png), radial-gradient(#21d0f0 80px, #2dc8e4 140px, #63e0f6 200px);
   background-size: 150%, 100%;
+  background-position: center;
+  background-image: url(../images/header.png);
 }
 header img {
   max-width: 20%;
@@ -85,7 +87,7 @@ header img {
   margin-top: 30px;
 }
 .colors img, .small-swatch img {
-  max-width: 100%;
+  width: 100%;
 }
 
 nav {
@@ -134,7 +136,7 @@ nav a div {
 nav a:nth-child(4n+4) {
   margin-right: 0 !important;
 }
-nav a:hover {
+nav a:active {
   background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #404445), color-stop(90%, #3c3f40));
   background: -webkit-linear-gradient(#404445 0%, #3c3f40 90%);
   background: -moz-linear-gradient(#404445 0%, #3c3f40 90%);
@@ -190,6 +192,14 @@ nav a.stop {
 
 .gocrazy {
   display: none;
+}
+
+#swatch {
+  width: 100%;
+}
+
+#smallswatch {
+  width: 100%;
 }
 
 .clear {

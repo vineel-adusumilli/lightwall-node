@@ -40,7 +40,7 @@ $(document).ready(function() {
   var image = new Image();
   image.onload = function() {
     ctx.drawImage(image, padding, padding);
-  }
+  };
   image.src = 'color_picker.png';
 
   var mouseDown = false;
@@ -70,7 +70,7 @@ $(document).ready(function() {
     evt.preventDefault();
     evt.stopPropagation();
     if (evt.targetTouches.length == 1) {
-      var touch = event.targetTouches[0];
+      var touch = evt.targetTouches[0];
       getColor(touch.pageX, touch.pageY);
     }
   }
