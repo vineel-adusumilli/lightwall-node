@@ -40,17 +40,32 @@
 
     $(window).resize(drawCanvas);
 
+    var mouseDown = false;
     this.bind('mousedown', function(evt) {
+      mouseDown = true;
       getColor(evt.clientX, evt.clientY);
     });
+    
+    this.bind('mousemove', function(evt) {
+      if (mouseDown) {
+        getColor(evt.clientX, evt.clientY);
+      }
+    });
 
-    this.bind('touchstart', function(evt) {
+    this.bind('mouseup', function(evt) {
+      mouseDown = false;
+    });
+
+    function touched(evt) {
       evt.stopPropagation();
       if (evt.targetTouches.length === 0) {
         var touch = evt.targetTouches[0];
         getColor(touch.pageX, touch.pageY);
       }
-    });
+    }
+
+    this.bind('touchstart', touched);
+    this.bind('touchmove', touched);
 
     function getColor(x, y) {
       var pos = getPos(canvas, x, y);

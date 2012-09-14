@@ -35,16 +35,16 @@ $(document).ready(function() {
       $('#swatch').fadeOut(300);
       $('.default').slideUp(300);
       $('.gocrazy').fadeIn(300, function() {
-        $(window).resize();
         $('#smallswatch').fadeIn(300);
+        $(window).resize();
       });
     } else {
       $('.default').slideDown(300);
       $('#smallswatch').fadeOut(300);
       $('.gocrazy').fadeOut(300);
       $('nav a div').delay(200).fadeIn(100, function() {
-        $(window).resize();
         $('#swatch').fadeIn(300);
+        $(window).resize();
       });
     }
   });
