@@ -21,32 +21,7 @@ $(document).ready(function() {
     $('header').css('background-color', rgb(data.r, data.g, data.b));
   });
 
-  /*function resize() {
-    $('#swatch').css('height', $(window).height() - getTop('#swatch') - 10);
-    $('#smallswatch').css('height', $(window).height() - getTop('.default') - 45); 
-  }
-  $(window).resize(resize);
-  resize();*/
-  $('#smallswatch').fadeOut();
-
   socket.on('recording', function(recording) {
-    if (recording) {
-      $('nav a div').fadeOut(100);
-      $('#swatch').fadeOut(300);
-      $('.default').slideUp(300);
-      $('.gocrazy').fadeIn(300, function() {
-        $('#smallswatch').fadeIn(300);
-        $(window).resize();
-      });
-    } else {
-      $('.default').slideDown(300);
-      $('#smallswatch').fadeOut(300);
-      $('.gocrazy').fadeOut(300);
-      $('nav a div').delay(200).fadeIn(100, function() {
-        $('#swatch').fadeIn(300);
-        $(window).resize();
-      });
-    }
   });
 
   function sendRGB(data) {
@@ -54,7 +29,6 @@ $(document).ready(function() {
   }
 
   $('#swatch').colorPicker('images/swatch.jpg', sendRGB);
-  $('#smallswatch').colorPicker('images/smallswatch.jpg', sendRGB);
 
   $('.fire').click(function() {
     socket.emit('fire');
@@ -64,8 +38,14 @@ $(document).ready(function() {
     socket.emit('ice');
   });
   
+  var recording = false;
   $('.record').click(function() {
-    socket.emit('record');
+    if (recording) {
+      socket.emit('stop');
+    } else {
+      socket.emit('record');
+    }
+    recording = !recording;
   });
 
   $('.play').click(function() {
