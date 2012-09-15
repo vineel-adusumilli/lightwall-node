@@ -30,7 +30,7 @@
       }
 
       canvas.width = $(canvas).width();
-      $(canvas).css('height', $(window).height() - top - 10);
+      $(canvas).css('height', $(window).height() - top);
       canvas.height = $(canvas).height();
       ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
     }
