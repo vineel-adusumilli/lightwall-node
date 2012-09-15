@@ -62,6 +62,7 @@
         var touch = evt.targetTouches[0];
         getColor(touch.pageX, touch.pageY);
       }
+      evt.preventDefault();
     }
 
     this.bind('touchstart', touched);
