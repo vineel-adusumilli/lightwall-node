@@ -69,7 +69,6 @@ body {
   color: #c1c6c7;
   font-family: "Helvetica Neue", sans-serif;
   font-weight: normal;
-  line-height: 1.6em;
 }
 
 header {
@@ -123,9 +122,9 @@ nav a {
   background: -o-linear-gradient(#747c7e 0%, #3c3f40 90%);
   background: linear-gradient(#747c7e 0%, #3c3f40 90%);
   text-shadow: 0 1px #7b8486;
-  -webkit-box-shadow: 0px 5px 10px black;
-  -moz-box-shadow: 0px 5px 10px black;
-  box-shadow: 0px 5px 10px black;
+  -webkit-box-shadow: 0px 5px 5px black;
+  -moz-box-shadow: 0px 5px 5px black;
+  box-shadow: 0px 5px 5px black;
 }
 nav a div {
   font-family: "Helvetica Neue", sans-serif;
