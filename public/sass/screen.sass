@@ -36,6 +36,7 @@ header
 
   img
     max-width: 20%
+    width: 50px
 
 .colors, .small-swatch
   margin-top: 30px
@@ -45,14 +46,13 @@ header
 
 nav
   background: darken($bottom, 30%)
-  padding: 3px
-
+  padding: 3px 0
+  +display-box
+  +box-orient(horizontal)
+  +box-align(stretch)
   a
-    float: left
-    display: inline
-    width: 24%
-    margin-right: 0.5%
-    margin-left: 0.5%
+    display: block
+    +box-flex(1)
     +symbols
     font-size: 40px
     text-align: center
@@ -60,7 +60,6 @@ nav
     padding: 15px 0
     text-decoration: none
     +background(linear-gradient($top 0%, $bottom 90%))
-    +border-radius(3px)
     text-shadow: 0 1px lighten($top, 3%)
     +box-shadow(0px 5px 10px #000)
     
