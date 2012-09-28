@@ -30,7 +30,7 @@
       }
 
       canvas.width = $(canvas).width();
-      $(canvas).css('height', $(window).height() - top);
+      $(canvas).css('height', $(window).height() - top - 3);
       canvas.height = $(canvas).height();
       ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
     }
@@ -57,12 +57,10 @@
     });
 
     function touched(evt) {
-      evt.stopPropagation();
       if (evt.targetTouches.length === 0) {
         var touch = evt.targetTouches[0];
         getColor(touch.pageX, touch.pageY);
       }
-      evt.preventDefault();
     }
 
     this.bind('touchstart', touched);
