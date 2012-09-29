@@ -85,6 +85,7 @@ header img {
 
 nav {
   background: black;
+  padding-bottom: 3px;
   display: -webkit-box;
   display: -moz-box;
   display: -ms-box;
