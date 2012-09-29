@@ -30,11 +30,6 @@ $(document).ready(function() {
 
   $('#swatch').colorPicker('images/swatch.jpg', sendRGB);
 
-  $(document).bind('touchstart', function(e) {
-    console.log('body touchstart');
-    e.preventDefault();
-  });
-
   $('.fire').click(function() {
     socket.emit('fire');
   });

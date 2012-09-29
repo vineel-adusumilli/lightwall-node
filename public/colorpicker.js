@@ -39,6 +39,18 @@
     image.src = background;
 
     $(window).resize(drawCanvas);
+    
+    function touched(evt) {
+      evt.preventDefault();
+      lastevt = evt;
+      if (evt.targetTouches.length === 1) {
+        var touch = evt.targetTouches[0];
+        getColor(touch.pageX, touch.pageY);
+      }
+    }
+
+    canvas.addEventListener('touchstart', touched);
+    canvas.addEventListener('touchmove', touched);
 
     var mouseDown = false;
     this.bind('mousedown', function(evt) {
@@ -55,16 +67,6 @@
     this.bind('mouseup', function(evt) {
       mouseDown = false;
     });
-
-    function touched(evt) {
-      if (evt.targetTouches.length === 0) {
-        var touch = evt.targetTouches[0];
-        getColor(touch.pageX, touch.pageY);
-      }
-    }
-
-    this.bind('touchstart', touched);
-    this.bind('touchmove', touched);
 
     function getColor(x, y) {
       var pos = getPos(canvas, x, y);
