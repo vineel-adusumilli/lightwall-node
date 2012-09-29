@@ -22,6 +22,11 @@ $(document).ready(function() {
   });
 
   socket.on('recording', function(recording) {
+    if (recording) {
+      $('.record').text('5');
+    } else {
+      $('.record').text('3');
+    }
   });
 
   function sendRGB(data) {
@@ -50,10 +55,6 @@ $(document).ready(function() {
 
   $('.play').click(function() {
     socket.emit('play');
-  });
-
-  $('.stop').click(function() {
-    socket.emit('stop');
   });
 });
 

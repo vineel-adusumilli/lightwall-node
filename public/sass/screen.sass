@@ -37,14 +37,8 @@ header
     max-width: 20%
     width: 50px
 
-.colors, .small-swatch
-  
-  img
-    width: 100%
-
 nav
   background: darken($bottom, 30%)
-  padding: 3px 0
   +display-box
   +box-orient(horizontal)
   +box-align(stretch)
@@ -61,17 +55,6 @@ nav
     text-shadow: 0 1px lighten($top, 3%)
     +box-shadow(0px 5px 5px #000)
     
-    div
-      font-family: "Helvetica Neue", sans-serif
-      font-size: 10px
-      text-transform: uppercase
-      position: relative
-      margin-top: 20px
-      color: $text
-      position: absolute
-      text-align: center
-      width: 24%
-
     &:nth-child(4n+4)
       margin-right: 0 !important
 
@@ -111,22 +94,7 @@ nav
         color: #a9f45a
         text-shadow: 0 0 5px #55f939
 
-    &.stop
-      width: 100%
-      position: relative
-      z-index: 12
-      margin-left: 0
-      margin-right: 0
-      margin-bottom: 3px
-      +box-shadow(0)
-
-.gocrazy
-  display: none
-
 #swatch
-  width: 100%
-
-#smallswatch
   width: 100%
 
 .clear
