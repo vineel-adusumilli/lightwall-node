@@ -160,6 +160,11 @@ net.createServer(function(sock) {
   sock.on('data', function() {
     ready = true;
   });
+
+  sock.on('end', function() {
+    socket = null;
+    ready = false;
+  });
 }).listen(ARDUINO_PORT);
 
 io.sockets.on('connection', function(sock) {
