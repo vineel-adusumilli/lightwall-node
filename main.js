@@ -40,7 +40,7 @@ var ARDUINO_PORT = 5000;
 var rgb = [ 0, 0, 0 ];
 
 var socket = null;
-var ready = true;
+var ready = false;
 
 var record;
 var recording = false;
@@ -154,6 +154,7 @@ io.set('transports', [
 net.createServer(function(sock) {
   console.log('Connected to Arduino!');
   socket = sock;
+  ready = true;
   updateRGB();
 
   sock.on('data', function() {
