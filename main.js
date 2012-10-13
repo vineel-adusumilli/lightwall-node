@@ -1,6 +1,9 @@
 var net = require('net')
   , sys = require('sys')
-  , fs = require('fs');
+  , fs = require('fs')
+  , log4js = require('log4js');
+
+log4js.replaceConsole();
 
 var WEB_PORT = 8080;
 
@@ -19,6 +22,7 @@ if (isStatic) {
     headers: { 'X-Powered-By': 'node-static' }
   });
   function handler(req, res) {
+    console.log('Request from: ' + req.connection.remoteAddress);
     file.serve(req, res, function(err, result) {
       if (err) {
         console.error('Error serving %s - %s', req.url, err.message);
@@ -39,6 +43,7 @@ var ARDUINO_PORT = 5000;
 
 var rgb = [ 0, 0, 0 ];
 
+var handshake = {};
 var socket = null;
 var ready = false;
 
@@ -152,18 +157,38 @@ io.set('transports', [
 ]);
 
 net.createServer(function(sock) {
-  console.log('Connected to Arduino!');
-  socket = sock;
-  ready = true;
-  updateRGB();
+  var ip = sock.remoteAddress;
+  console.log('Attempted connection from ' + ip);
+  handshake[ip] = 'in0';
 
-  sock.on('data', function() {
-    ready = true;
+  sock.on('data', function(data) {
+    data = data.toString().trim();
+
+    if (handshake[ip] === 'in0') {
+      if (data === 'a') {
+        sock.write('b');
+        handshake[ip] = 'in1';
+      }
+    } else if (handshake[ip] === 'in1') {
+      if (data === 'c') {
+        handshake[ip] = 'ready';
+        console.log('Connected to ' + ip);
+        socket = sock;
+        ready = true;
+        updateRGB();
+      }
+    }
+    if (sock === socket) {
+      ready = true;
+    }
   });
 
   sock.on('end', function() {
-    socket = null;
-    ready = false;
+    delete handshake[ip];
+    if (sock === socket) {
+      socket = null;
+      ready = false;
+    }
   });
 }).listen(ARDUINO_PORT);
 
