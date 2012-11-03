@@ -1,0 +1,17 @@
+CACHE MANIFEST
+# Fri Nov  2 17:00:31 PDT 2012
+
+CACHE:
+/index.html
+/css/screen.css
+/jquery.min.js
+/colorpicker.js
+/script.js
+/images/logo.png
+/images/swatch.jpg
+/images/header.png
+/fonts/Icons.woff
+
+NETWORK:
+*
+
