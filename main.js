@@ -10,6 +10,8 @@ var WEB_PORT = 8080;
 // static server enabled
 var isStatic = process.argv[2] !== '--no-static';
 
+var heartBeat = setTimeout(updateRGB, 1000);
+
 var io;
 if (isStatic) {
   var app = require('http').createServer(handler);
@@ -104,6 +106,9 @@ function updateRGB() {
     socket.write(buf);
     ready = false;
   }
+
+  clearTimeout(heartBeat);
+  heartBeat = setTimeout(updateRGB, 1000);
 }
 
 function fire() {
